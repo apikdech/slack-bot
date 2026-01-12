@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "bump": "ts-node scripts/daily-bump.ts"
+    "slack-bump": "tsx scripts/slack/main.ts",
+    "google-bump": "tsx scripts/google/main.ts"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   "homepage": "https://github.com/apikdech/slack-bot#readme",
   "devDependencies": {
     "@types/node": "^25.0.6",
-    "ts-node": "^10.9.2"
+    "tsx": "^4.21.0"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",

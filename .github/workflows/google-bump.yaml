@@ -1,0 +1,22 @@
+name: Google Chat PR Bump
+on:
+  schedule:
+    - cron: "0 1 * * 1-5" # 8 AM
+  workflow_dispatch:
+
+jobs:
+  notify-google:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20", cache: "npm" }
+      - run: npm ci
+
+      - name: Run Google Script
+        run: npx ts-node scripts/google/main.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Map Secrets to the generic names used in config.ts
+          WEBHOOK_BACKEND: ${{ secrets.GOOGLE_CHAT_WEBHOOK_BACKEND }}
+          WEBHOOK_FRONTEND: ${{ secrets.GOOGLE_CHAT_WEBHOOK_FRONTEND }}
