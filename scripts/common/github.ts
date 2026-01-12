@@ -18,10 +18,10 @@ export interface PullRequestEnriched {
 }
 
 export async function fetchEnrichedPRs() {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const [OWNER, REPO] = (process.env.GITHUB_REPOSITORY || "").split("/");
+  const GITHUB_TOKEN = process.env.GH_TOKEN;
+  const [OWNER, REPO] = (process.env.GH_REPOSITORY || "").split("/");
   if (!GITHUB_TOKEN || !OWNER || !REPO) {
-    throw new Error("❌ Missing GITHUB_TOKEN or Repository context.");
+    throw new Error("❌ Missing GH_TOKEN or Repository context.");
   }
 
   const octokit = new Octokit({ auth: GITHUB_TOKEN });

@@ -50,8 +50,8 @@ Each notification includes:
 
    **Required:**
 
-   - `GITHUB_TOKEN`: GitHub Personal Access Token with `repo` permissions
-   - `GITHUB_REPOSITORY`: Your repository in format `owner/repo`
+   - `GH_TOKEN`: GitHub Personal Access Token with `repo` permissions
+   - `GH_REPOSITORY`: Your repository in format `owner/repo`
 
    **For Slack notifications:**
 
@@ -198,8 +198,8 @@ This project is licensed under the ISC License - see the package.json file for d
 
 ### Authentication issues?
 
-- Verify `GITHUB_TOKEN` has `repo` permissions
-- Check `GITHUB_REPOSITORY` format is `owner/repo`
+- Verify `GH_TOKEN` has `repo` permissions
+- Check `GH_REPOSITORY` format is `owner/repo`
 
 ### Webhook failures?
 

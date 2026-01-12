@@ -16,7 +16,7 @@ jobs:
       - name: Run Google Script
         run: npm run google-bump
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           # Map Secrets to the generic names used in config.ts
           WEBHOOK_BACKEND: ${{ secrets.GOOGLE_CHAT_WEBHOOK_BACKEND }}
           WEBHOOK_FRONTEND: ${{ secrets.GOOGLE_CHAT_WEBHOOK_FRONTEND }}
