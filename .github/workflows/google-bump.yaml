@@ -14,7 +14,7 @@ jobs:
       - run: npm ci
 
       - name: Run Google Script
-        run: npx ts-node scripts/google/main.ts
+        run: npm run google-bump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Map Secrets to the generic names used in config.ts
