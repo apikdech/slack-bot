@@ -45,7 +45,7 @@ async function sendToGoogleChat(
 
     sections.push({
       // A section header handles the clickable title
-      header: `PR #${pr.number}: ${pr.title.substring(0, 80)}...`, // Truncate if too long
+      header: `PR #${pr.number}: ${pr.title}`,
       widgets: [
         {
           // Text Paragraph for the Link
