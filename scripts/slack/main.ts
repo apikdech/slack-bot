@@ -32,10 +32,15 @@ async function sendToSlack(
   ];
 
   for (const pr of prs) {
-    const daysOld = Math.floor(
-      (new Date().getTime() - new Date(pr.created_at).getTime()) /
-        (1000 * 3600 * 24)
-    );
+    const now = new Date().getTime();
+    const created = new Date(pr.created_at).getTime();
+    const diffMs = now - created;
+
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    const ageString = `${days}d ${hours}h ${minutes}m`;
 
     const size = `+${pr.additions} / -${pr.deletions}`;
 
@@ -62,7 +67,7 @@ async function sendToSlack(
       fields: [
         {
           type: "mrkdwn",
-          text: `👤 *Author:* ${pr.user.login}\n⏳ *Age:* ${daysOld} days`,
+          text: `👤 *Author:* ${pr.user.login}\n⏳ *Age:* ${ageString}`,
         },
         {
           type: "mrkdwn",
