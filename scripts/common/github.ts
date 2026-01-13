@@ -20,6 +20,11 @@ export interface PullRequestEnriched {
 export async function fetchEnrichedPRs() {
   const GITHUB_TOKEN = process.env.GH_TOKEN;
   const [OWNER, REPO] = (process.env.GH_REPOSITORY || "").split("/");
+  console.log("GH_REPOSITORY", process.env.GH_REPOSITORY);
+  console.log("OWNER", OWNER);
+  console.log("REPO", REPO);
+  console.log("GITHUB_TOKEN", GITHUB_TOKEN?.slice(0, 5) + "...");
+
   if (!GITHUB_TOKEN || !OWNER || !REPO) {
     throw new Error("❌ Missing GH_TOKEN or Repository context.");
   }
