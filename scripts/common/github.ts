@@ -53,9 +53,9 @@ export async function fetchEnrichedPRs() {
 
     // Find matching rule
     const matchedRule = CONFIG.rules.find(
-      (rule) => rule.webhookEnv && prLabelNames.includes(rule.label)
-    );
       (rule) => rule.webhookEnv && prLabelNames.includes(rule.label),
+    );
+
     if (matchedRule) {
       console.log(`✨ Fetching details for PR #${pr.number}...`);
 
