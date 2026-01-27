@@ -55,9 +55,9 @@ async function sendToGoogleChat(
       header: `PR #${pr.number}: ${pr.title}`,
       widgets: [
         {
-          // Text Paragraph for the Link
+          // Text Paragraph for the Link and Repository
           textParagraph: {
-            text: `<a href="${pr.html_url}">🔗 Open Pull Request</a>`,
+            text: `<a href="${pr.html_url}">🔗 Open Pull Request</a><br>📦 <b>Repository:</b> ${pr.repository}`,
           },
         },
         {

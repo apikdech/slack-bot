@@ -1,12 +1,15 @@
 # Slack & Google Chat PR Bump Bot
 
-A TypeScript-based automation tool that fetches open pull requests from GitHub repositories and sends formatted notifications to Slack and Google Chat channels. The bot helps teams stay on top of pending code reviews by automatically notifying relevant team members about PRs that need attention.
+A TypeScript-based automation tool that fetches open pull requests from multiple GitHub repositories and sends formatted notifications to Slack and Google Chat channels. The bot helps teams stay on top of pending code reviews by automatically notifying relevant team members about PRs that need attention across all monitored repositories.
 
 ## 🚀 Features
 
+- **Multi-Repository Support**: Monitor PRs from multiple GitHub repositories simultaneously
+- **Environment Variable Whitelist**: Configure which repositories to watch via environment variables
 - **Multi-Platform Notifications**: Send PR updates to both Slack and Google Chat
 - **Label-Based Routing**: Automatically route PRs to specific channels based on labels (e.g., `backend`, `frontend`)
 - **Rich Formatting**: Beautifully formatted messages with PR details, author info, size metrics, and CI status
+- **Repository Identification**: Each PR notification shows which repository it belongs to
 - **Automated Scheduling**: Runs daily at 8 AM on weekdays via GitHub Actions
 - **Manual Triggers**: Can be run manually via GitHub Actions workflow dispatch
 - **Smart Filtering**: Only shows non-draft PRs that match configured labels
@@ -15,6 +18,7 @@ A TypeScript-based automation tool that fetches open pull requests from GitHub r
 
 Each notification includes:
 
+- **Repository name** (which repo the PR belongs to)
 - PR title and number with direct link
 - Author and age (days since creation)
 - Code size metrics (additions/deletions)
@@ -46,12 +50,22 @@ Each notification includes:
    npm install
    ```
 
-3. **Configure environment variables** in your GitHub repository secrets:
+3. **Create a local `.env` file** (for local testing):
+
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Then edit `.env` with your actual credentials and repository list.
+
+4. **Configure environment variables** in your GitHub repository secrets:
 
    **Required:**
 
    - `GH_TOKEN`: GitHub Personal Access Token with `repo` permissions
-   - `GH_REPOSITORY`: Your repository in format `owner/repo`
+   - `GH_REPOSITORIES`: Comma-separated list of repositories to monitor (format: `owner1/repo1,owner2/repo2,owner3/repo3`)
+     - Example: `myorg/backend,myorg/frontend,myorg/mobile`
+     - For backward compatibility, `GH_REPOSITORY` (single repository) is also supported
 
    **For Slack notifications:**
 
@@ -89,6 +103,23 @@ export const CONFIG = {
 ```
 
 ## 🚀 Usage
+
+### Setting Up Repository Whitelist
+
+Configure the repositories to monitor by setting the `GH_REPOSITORIES` environment variable:
+
+**Single Repository:**
+```bash
+export GH_REPOSITORIES="myorg/backend"
+```
+
+**Multiple Repositories (comma-separated):**
+```bash
+export GH_REPOSITORIES="myorg/backend,myorg/frontend,myorg/mobile"
+```
+
+**In GitHub Actions:**
+Set `GH_REPOSITORIES` as a repository variable in Settings > Secrets and variables > Actions > Variables.
 
 ### Automated Execution
 
@@ -195,13 +226,21 @@ This project is licensed under the ISC License - see the package.json file for d
 - Check that PRs have the correct labels matching your `config.ts`
 - Verify PRs are not drafts
 - Ensure webhook URLs are configured in GitHub secrets
+- Verify all repositories in `GH_REPOSITORIES` are accessible with your `GH_TOKEN`
 
 ### Authentication issues?
 
-- Verify `GH_TOKEN` has `repo` permissions
-- Check `GH_REPOSITORY` format is `owner/repo`
+- Verify `GH_TOKEN` has `repo` permissions for **all repositories** in the whitelist
+- Check `GH_REPOSITORIES` format is correct: `owner/repo,owner/repo` (comma-separated, no spaces)
+- Ensure the token has access to all organizations/repositories specified
 
 ### Webhook failures?
 
 - Confirm webhook URLs are valid and accessible
 - Check webhook permissions in Slack/Google Chat
+
+### Repository-specific errors?
+
+- If one repository fails, the bot will continue processing other repositories
+- Check the logs for specific error messages per repository
+- Verify the repository names are spelled correctly in `GH_REPOSITORIES`

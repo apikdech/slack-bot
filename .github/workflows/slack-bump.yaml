@@ -17,7 +17,7 @@ jobs:
         run: npm run slack-bump
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_REPOSITORY: ${{ vars.GH_REPOSITORY }}
+          GH_REPOSITORIES: ${{ vars.GH_REPOSITORIES }}
           # Map Secrets to the generic names used in config.ts
           WEBHOOK_BACKEND: ${{ secrets.SLACK_WEBHOOK_BACKEND }}
           WEBHOOK_FRONTEND: ${{ secrets.SLACK_WEBHOOK_FRONTEND }}

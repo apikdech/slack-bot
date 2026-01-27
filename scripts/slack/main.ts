@@ -61,7 +61,7 @@ async function sendToSlack(
       text: {
         type: "mrkdwn",
         // The Main "Header" for the row (Title + Link)
-        text: `👉 *<${pr.html_url}|${pr.title}>* (#${pr.number})`,
+        text: `👉 *<${pr.html_url}|${pr.title}>* (#${pr.number})\n📦 *Repository:* ${pr.repository}`,
       },
       // "fields" creates the 2-column table effect
       fields: [
